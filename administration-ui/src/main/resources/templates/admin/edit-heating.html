@@ -1,0 +1,85 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Heating edit</title>
+
+    <!-- Website Font style -->
+    <link rel="stylesheet" href="/style/bootstrap.css"/>
+    <link rel="stylesheet" href="/style/common.css"/>
+    <link rel="stylesheet" href="/style/top_menu.css"/>
+</head>
+<body>
+
+<th:block th:if="${session.user != null}">
+    <!-- Menu -->
+    <ul>
+        <li><a href="/">HEATINGS</a></li>
+        <th:block th:if="${session.user?.role?.toString() == 'ADMIN' and !session.user.isBlocked()}">
+            <li><a href="/users">USERS</a></li>
+        </th:block>
+        <li><a href="/logout">LOGOUT</a></li>
+        <li class="right-label"><a href="#" th:text="${session.user?.getFullName()}"></a></li>
+    </ul>
+    <hr/>
+
+    <!-- Delete confirmation -->
+    <table align="center">
+        <form action="/edit/heating" method="post">
+            <tr>
+                <td>ID:</td>
+            </tr>
+            <tr>
+                <td><input name="heatingId" th:value="${heating?.id}" readonly="readonly"/></td>
+            </tr>
+            <tr>
+                <td>HOST:</td>
+            </tr>
+            <tr>
+                <td><input name="host" th:placeholder="${heating?.host}" th:required="required"/></td>
+            </tr>
+            <tr>
+                <td>PORT:</td>
+            </tr>
+            <tr>
+                <td><input type="number" name="port" th:placeholder="${heating?.port}" th:required="required"/></td>
+            </tr>
+            <tr>
+                <td>DESCRIPTION:</td>
+            </tr>
+            <tr>
+                <td><input name="description" th:placeholder="${heating?.description}" th:required="required"/></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Yes" class="btn btn-sm btn-success"/>
+                    <a href="/" class="btn btn-sm btn-warning">No</a>
+                </td>
+            </tr>
+        </form>
+
+    </table>
+</th:block>
+
+<th:block th:if="${session.user == null or session.user.isBlocked()}">
+    <br/>
+    <hr/>
+    <table align="center">
+        <tr>
+            <td>
+                You are not authorized, could you please authenticate for using our service
+            </td>
+            <td>
+                <a href="/authentication" class="btn btn-sm btn-primary">Sign in</a>
+            </td>
+        </tr>
+    </table>
+</th:block>
+
+<!-- Footer -->
+<table align="center"><br/>
+    <tr>
+        <td>&copy;Heating-system (KNURE), 2018</td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="administration-ui" />
+        <module name="config-server" />
+        <module name="emulator-access-service" />
+        <module name="eureka-server" />
+        <module name="gateway-service" />
+        <module name="heating-emulator" />
+        <module name="heating-service" />
+        <module name="heatingemulator" />
+        <module name="user-service" />
+        <module name="users-heating-service" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="administration-ui" target="1.8" />
+      <module name="config-server" target="1.8" />
+      <module name="eureka-server" target="1.8" />
+      <module name="gateway-service" target="1.8" />
+      <module name="heating-emulator" target="1.8" />
+      <module name="heating-service" target="1.8" />
+      <module name="user-service" target="1.8" />
+      <module name="users-heating-service" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

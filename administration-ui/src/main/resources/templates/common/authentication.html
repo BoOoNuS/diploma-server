@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Authenticate</title>
+
+    <!-- Website Font style -->
+    <link rel="stylesheet" href="/style/bootstrap.css"/>
+    <link rel="stylesheet" href="/style/common.css"/>
+</head>
+<body>
+<table class="auth-reg-table" align="center">
+    <form action="/sign-in" method="post">
+        <tr>
+            <td>Login:</td>
+        </tr>
+        <tr>
+            <td><input name="login" minlength="4" maxlength="16" th:required="required"/></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+        </tr>
+        <tr>
+            <td><input type="password" name="password" minlength="4" maxlength="16" th:required="required"/></td>
+        </tr>
+        <tr>
+            <td><input type="submit" class="btn btn-sm btn-primary" value="Sign in"/>
+                <a href="/registration" class="btn btn-sm btn-primary">Sign up</a></td>
+        </tr>
+    </form>
+</table>
+</body>
+</html>

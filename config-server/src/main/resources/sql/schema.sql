@@ -1,0 +1,21 @@
+CREATE TABLE users (
+    id BIGSERIAL PRIMARY KEY,
+    full_name CHARACTER VARYING(36) NOT NULL,
+    login CHARACTER VARYING(36) UNIQUE NOT NULL,
+    password CHARACTER VARYING(36) NOT NULL,
+    user_role CHARACTER VARYING(16) NOT NULL,
+    blocked BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE heating (
+    id BIGSERIAL PRIMARY KEY,
+    description CHARACTER VARYING(255) NOT NULL,
+    host CHARACTER VARYING(255) NOT NULL,
+    port INTEGER NOT NULL
+);
+
+CREATE TABLE users_heating (
+    id BIGSERIAL PRIMARY KEY,
+    heating_id BIGINT REFERENCES heating (id),
+    user_id BIGINT REFERENCES users (id)
+);

@@ -1,0 +1,119 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Users</title>
+
+    <!-- Website Font style -->
+    <link rel="stylesheet" href="/style/bootstrap.css"/>
+    <link rel="stylesheet" href="/style/common.css"/>
+    <link rel="stylesheet" href="/style/top_menu.css"/>
+</head>
+<body>
+
+<th:block th:if="${session.user?.role?.toString() == 'ADMIN' and !session.user.isBlocked()}">
+    <!-- Menu -->
+    <ul>
+        <li><a href="/">HEATINGS</a></li>
+        <li><a href="/users">USERS</a></li>
+        <li><a href="/logout">LOGOUT</a></li>
+        <li class="right-label"><a href="#" th:text="${session.user?.getFullName()}"></a></li>
+    </ul>
+    <hr/>
+
+    <br/>
+    <table align="center">
+        <tr>
+            <td>
+                <a href="/create/user"
+                   class="btn btn-sm btn-warning">Create user</a>
+            </td>
+            <form action="/find/user">
+                <td><input type="search" name="fullName" placeholder="User name"/></td>
+                <td><input class="btn btn-sm btn-primary" type="submit" value="Find"/></td>
+            </form>
+        </tr>
+    </table>
+    <br/>
+    <hr/>
+
+    <th:block th:if="${!users.isEmpty()}">
+        <table class="info-table" align="center">
+            <tr>
+                <th>ID</th>
+                <th>LOGIN</th>
+                <th>FULL NAME</th>
+                <th>ROLE</th>
+                <th>BLOCKED</th>
+            </tr>
+            <th:block th:each="user : ${users}">
+                <form action="/change/user/permission" method="post">
+                    <input type="hidden" name="userId" th:value="${user?.id}"/>
+                    <input type="hidden" name="login" th:value="${user?.login}"/>
+                    <input type="hidden" name="password" th:value="${user?.password}"/>
+                    <input type="hidden" name="fullName" th:value="${user?.fullName}"/>
+                    <tr>
+                        <td>
+                            <th:block th:text="${user?.id}"/>
+                        </td>
+                        <td>
+                            <th:block th:text="${user?.login}"/>
+                        </td>
+                        <td>
+                            <th:block th:text="${user?.fullName}"/>
+                        </td>
+                        <td>
+                            <th:block th:if="${user?.role.toString() == 'ADMIN'}">
+                                <select name="role" class="dropdown-item">
+                                    <option value="USER">USER</option>
+                                    <option value="ADMIN" selected="selected">ADMIN</option>
+                                </select>
+                            </th:block>
+                            <th:block th:if="${user?.role.toString() == 'USER'}">
+                                <select name="role" class="dropdown-item">
+                                    <option value="USER" selected="selected">USER</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                </select>
+                            </th:block>
+                        </td>
+                        <td>
+                            <th:block th:if="${user?.blocked}">
+                                <input name="blocked" type="checkbox" checked="checked"/>
+                            </th:block>
+                            <th:block th:if="${!user?.blocked}">
+                                <input name="blocked" type="checkbox"/>
+                            </th:block>
+                            <th:block th:text="${user?.blocked} ? 'Blocked' : 'Unblocked'"/>
+                        </td>
+                        <td>
+                            <input type="submit" value="Submit" class="btn btn-sm btn-success"/>
+                        </td>
+                    </tr>
+                </form>
+            </th:block>
+        </table>
+    </th:block>
+</th:block>
+
+<th:block th:if="${session.user == null or session.user?.role?.toString() == 'USER' or session.user?.isBlocked()}">
+    <br/>
+    <hr/>
+    <table align="center">
+        <tr>
+            <td>
+                Access denied
+            </td>
+            <td>
+                <a href="/authentication" class="btn btn-sm btn-primary">Sign in</a>
+            </td>
+        </tr>
+    </table>
+</th:block>
+
+<!-- Footer -->
+<table align="center"><br/>
+    <tr>
+        <td>&copy;Heating-system (KNURE), 2018</td>
+    </tr>
+</table>
+</body>
+</html>

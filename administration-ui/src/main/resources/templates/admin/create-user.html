@@ -1,0 +1,90 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Create user</title>
+
+    <!-- Website Font style -->
+    <link rel="stylesheet" href="/style/bootstrap.css"/>
+    <link rel="stylesheet" href="/style/common.css"/>
+    <link rel="stylesheet" href="/style/top_menu.css"/>
+</head>
+<body>
+
+<th:block th:if="${session.user?.role?.toString() == 'ADMIN' and !session.user.isBlocked()}">
+    <!-- Menu -->
+    <ul>
+        <li><a href="/">HEATINGS</a></li>
+        <th:block th:if="${session.user?.role?.toString() == 'ADMIN' and !session.user.isBlocked()}">
+            <li><a href="/users">USERS</a></li>
+        </th:block>
+        <li><a href="/logout">LOGOUT</a></li>
+        <li class="right-label"><a href="#" th:text="${session.user?.getFullName()}"></a></li>
+    </ul>
+    <hr/>
+    <table class="auth-reg-table" align="center">
+        <form action="/create/user" method="post">
+            <tr>
+                <td>Login:</td>
+            </tr>
+            <tr>
+                <td><input name="login" minlength="4" maxlength="16" th:required="required"/></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+            </tr>
+            <tr>
+                <td><input type="password" name="password" minlength="4" maxlength="16" th:required="required"/></td>
+            </tr>
+            <tr>
+                <td>Full name:</td>
+            </tr>
+            <tr>
+                <td><input name="fullName" minlength="2" maxlength="32" th:required="required"/></td>
+            </tr>
+            <tr>
+                <td>
+                    Role:
+                    <select name="role">
+                        <option value="USER" selected="selected">USER</option>
+                        <option value="ADMIN">ADMIN</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Blocked:
+                    <input name="blocked" type="checkbox"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" class="btn btn-sm btn-success" value="Yes"/>
+                    <a href="/users" class="btn btn-sm btn-warning">No</a>
+                </td>
+            </tr>
+        </form>
+    </table>
+</th:block>
+<th:block th:if="${session.user == null or session.user?.role?.toString() == 'USER' or session.user?.isBlocked()}">
+    <br/>
+    <hr/>
+    <table align="center">
+        <tr>
+            <td>
+                Access denied
+            </td>
+            <td>
+                <a href="/authentication" class="btn btn-sm btn-primary">Sign in</a>
+            </td>
+        </tr>
+    </table>
+</th:block>
+
+<!-- Footer -->
+<table align="center"><br/>
+    <tr>
+        <td>&copy;Heating-system (KNURE), 2018</td>
+    </tr>
+</table>
+</body>
+</html>

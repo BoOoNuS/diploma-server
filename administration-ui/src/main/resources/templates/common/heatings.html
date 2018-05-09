@@ -1,0 +1,227 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Heatings</title>
+
+    <!-- Website Font style -->
+    <link rel="stylesheet" href="/style/bootstrap.css"/>
+    <link rel="stylesheet" href="/style/common.css"/>
+    <link rel="stylesheet" href="/style/top_menu.css"/>
+</head>
+<body>
+
+<th:block th:if="${session.user != null and !session.user?.blocked}">
+    <!-- Menu -->
+    <ul>
+        <li><a href="/">HEATINGS</a></li>
+        <th:block th:if="${session.user?.role?.toString() == 'ADMIN' and !session.user.isBlocked()}">
+            <li><a href="/users">USERS</a></li>
+        </th:block>
+        <li><a href="/logout">LOGOUT</a></li>
+        <li class="right-label"><a href="#" th:text="${session.user?.getFullName()}"></a></li>
+    </ul>
+    <hr/>
+
+    <br/>
+    <th:block th:if="${!session.user.isBlocked()}">
+        <table align="center">
+            <tr>
+                <th:block th:if="${session.user?.role?.toString() == 'ADMIN'}">
+                    <td>
+                        <a href="/create/heating"
+                           class="btn btn-sm btn-warning">Create heating</a>
+                    </td>
+                </th:block>
+                <td>
+                    <table>
+                        <tr>
+                            <form action="/find/heating">
+                                <td><input type="search" name="description" placeholder="Room name"/></td>
+                                <td><input class="btn btn-sm btn-primary" type="submit" value="Find"/></td>
+                            </form>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </th:block>
+    <br/>
+    <hr/>
+
+    <th:block th:if="${!heatingUsersInfo.isEmpty()}">
+        <table class="info-table" align="center">
+            <tr>
+                <th>ID</th>
+                <th>DESCRIPTION</th>
+                <th>SETTINGS</th>
+                <th:block th:if="${session.user?.role?.toString() == 'ADMIN' and !session.user.isBlocked()}">
+                    <th>HOST</th>
+                    <th>PORT</th>
+                    <th>PERMITTED USERS</th>
+                </th:block>
+            </tr>
+            <th:block th:each="heatingUserInfo : ${heatingUsersInfo}">
+                <form action="/unassign/user" method="post">
+                    <tr>
+                        <td th:text="${heatingUserInfo?.heating?.id}"/>
+                        <td th:text="${heatingUserInfo?.heating?.description}"/>
+                        <td>
+                            <table class="inner-table">
+                                <th:block th:if="${heatingUserInfo?.heatingConfiguration != null}">
+                                    <tr>
+                                        <td>
+                                            Air temperature
+                                        </td>
+                                        <td>
+                                            -
+                                            <th:block
+                                                    th:text="${heatingUserInfo?.heatingConfiguration?.airTemperature}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Air humidity
+                                        </td>
+                                        <td>
+                                            -
+                                            <th:block th:text="${heatingUserInfo?.heatingConfiguration?.airHumidity}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Air exchange
+                                        </td>
+                                        <td>
+                                            -
+                                            <th:block th:text="${heatingUserInfo?.heatingConfiguration?.airExchange}"/>
+                                        </td>
+                                    </tr>
+                                </th:block>
+                                <th:block th:if="${heatingUserInfo?.heatingConfiguration == null}">
+                                    <tr>
+                                        <td>
+                                            The heating machine is not available
+                                        </td>
+                                    </tr>
+                                </th:block>
+                            </table>
+                        </td>
+                        <th:block th:if="${session.user?.role?.toString() == 'ADMIN' and !session.user.isBlocked()}">
+                            <td th:text="${heatingUserInfo?.heating?.host}"/>
+                            <td th:text="${heatingUserInfo?.heating?.port}"/>
+                            <td>
+                                <table class="inner-table">
+                                    <th:block th:if="${!heatingUserInfo?.users?.isEmpty()}">
+                                        <th:block th:each="user : ${heatingUserInfo?.users}">
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" name="heatingId"
+                                                           th:value="${heatingUserInfo?.heating?.id}"/>
+                                                    <input type="checkbox" name="userIds" th:value="${user?.id}"/>
+                                                </td>
+                                                <td>
+                                                    ID
+                                                </td>
+                                                <td>
+                                                    -
+                                                    <th:block th:text="${user?.id}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td/>
+                                                <td>
+                                                    Login
+                                                </td>
+                                                <td>
+                                                    -
+                                                    <th:block th:text="${user?.login}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td/>
+                                                <td>
+                                                    Full name
+                                                </td>
+                                                <td>
+                                                    -
+                                                    <th:block th:text="${user?.fullName}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td/>
+                                                <td>
+                                                    Role
+                                                </td>
+                                                <td>
+                                                    -
+                                                    <th:block th:text="${user?.role}"/>
+                                                </td>
+                                            </tr>
+                                        </th:block>
+                                    </th:block>
+                                    <th:block th:if="${heatingUserInfo?.users.isEmpty()}">
+                                        <tr>
+                                            <td>
+                                                There is no permitted users
+                                            </td>
+                                        </tr>
+                                    </th:block>
+                                </table>
+                            </td>
+                            <td>
+                                <a th:href="@{/assign/user(heatingId=${heatingUserInfo?.heating?.id})}"
+                                   class="btn btn-sm btn-success">Assign user</a>
+                            </td>
+                            <td>
+                                <a th:href="@{/edit/heating(heatingId=${heatingUserInfo?.heating?.id})}"
+                                   class="btn btn-sm btn-warning">Edit</a>
+                            </td>
+                            <th:block th:if="${!heatingUserInfo?.users?.isEmpty()}">
+                                <td>
+                                    <input type="submit" value="Unassign" class="btn btn-sm btn-danger"/>
+                                </td>
+                            </th:block>
+                        </th:block>
+                        <th:block th:if="${session.user?.role.toString() == 'USER' and !session.user?.isBlocked()}">
+                            <td>
+                                <a th:href="@{/delete/heating/confirmation(heatingId=${heatingUserInfo?.heating?.id})}"
+                                   class="btn btn-sm btn-danger">Delete</a>
+                            </td>
+                        </th:block>
+                    </tr>
+                </form>
+            </th:block>
+        </table>
+    </th:block>
+    <th:block th:if="${heatingUsersInfo.isEmpty()}">
+        <table align="center">
+            <tr>
+                <td>You have no available heatings</td>
+            </tr>
+        </table>
+    </th:block>
+</th:block>
+
+<th:block th:if="${session.user == null or session.user.isBlocked()}">
+    <br/>
+    <hr/>
+    <table align="center">
+        <tr>
+            <td>
+                You are not authorized, could you please authenticate for using our service
+            </td>
+            <td>
+                <a href="/authentication" class="btn btn-sm btn-primary">Sign in</a>
+            </td>
+        </tr>
+    </table>
+</th:block>
+
+<!-- Footer -->
+<table align="center"><br/>
+    <tr>
+        <td>&copy;Heating-system (KNURE), 2018</td>
+    </tr>
+</table>
+</body>
+</html>

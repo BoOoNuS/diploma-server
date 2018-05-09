@@ -1,0 +1,47 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Registration</title>
+
+    <!-- Website Font style -->
+    <link rel="stylesheet" href="/style/bootstrap.css"/>
+    <link rel="stylesheet" href="/style/common.css"/>
+
+    <script src='https://www.google.com/recaptcha/api.js?hl=en'></script>
+</head>
+<body>
+<form action="/sign-up" method="post">
+    <table class="auth-reg-table" align="center">
+        <tr>
+            <td>
+                Login:
+            </td>
+        </tr>
+        <tr>
+            <td><input name="login" minlength="4" maxlength="16" th:required="required"/></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+        </tr>
+        <tr>
+            <td><input type="password" name="password" minlength="4" maxlength="16" th:required="required"/></td>
+        </tr>
+        <tr>
+            <td>Full name:</td>
+        </tr>
+        <tr>
+            <td><input name="fullName" minlength="2" maxlength="32" th:required="required"/></td>
+        </tr>
+        <tr>
+            <td>
+                <div align="center" class="g-recaptcha" data-sitekey="6Ld7SyMUAAAAADW-9EHXwCRRWKmsHYB1BIQS3zUM"></div>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" class="btn btn-sm btn-primary" value="Sign up"/>
+                <a href="/authentication" class="btn btn-sm btn-primary">Sign in</a></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

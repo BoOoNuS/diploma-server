@@ -1,0 +1,19 @@
+.info-table {
+    border-collapse: collapse;
+}
+
+.info-table TD, TH {
+    padding: 2px;
+    text-align: left;
+    border: 1px solid maroon;
+}
+
+.inner-table TD, TH {
+    padding: 2px;
+    text-align: left;
+    border: 0px;
+}
+
+.auth-reg-table {
+    margin-top: 100px;
+}

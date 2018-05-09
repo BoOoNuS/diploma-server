@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/administration-ui/administration-ui.iml" filepath="$PROJECT_DIR$/administration-ui/administration-ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/config-server/config-server.iml" filepath="$PROJECT_DIR$/config-server/config-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eureka-server/eureka-server.iml" filepath="$PROJECT_DIR$/eureka-server/eureka-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gateway-service/gateway-service.iml" filepath="$PROJECT_DIR$/gateway-service/gateway-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/heating-emulator/heating-emulator.iml" filepath="$PROJECT_DIR$/heating-emulator/heating-emulator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/heating-service/heating-service.iml" filepath="$PROJECT_DIR$/heating-service/heating-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/user-service/user-service.iml" filepath="$PROJECT_DIR$/user-service/user-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/users-heating-service/users-heating-service.iml" filepath="$PROJECT_DIR$/users-heating-service/users-heating-service.iml" />
+    </modules>
+  </component>
+</project>
